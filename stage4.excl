@@ -1,0 +1,14 @@
+/home/stickyfingaz/Downloads/*
+/home/stickyfingaz/Projects/*
+/home/stickyfingaz/Books/Literature/*
+/home/stickyfingaz/.local/share/Trash/*
+/lost+found
+/dev/*
+/mnt/*
+/proc/*
+/sys/*
+/tmp/*
+/usr/portage/*
+/usr/portage/distfiles/*
+/usr/src/*
+/var/lib/docker/*

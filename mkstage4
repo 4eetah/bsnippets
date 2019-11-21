@@ -1,0 +1,41 @@
+#!/bin/sh
+case $# in
+0|1) echo "Usage: `basename $0` stage4_dir stage4_exclude_file" 1>&2
+    ;;
+  *) stage4_dir=${1%/}
+     stage4_excl=$2
+     if test -d "$stage4_dir"; then
+        stage4_tar=`hostname`-stage4-`date +%d.%m.%Y`.tar.bz2
+        tar cjpvf "$stage4_dir/$stage4_tar" --exclude-from="$stage4_excl" --xattrs-include='*.*' --acls --numeric-owner /
+     else
+        echo "Error: $stage_dir directory doesn't exist."
+        exit 1
+     fi
+    ;;
+esac
+
+# unpack with
+# tar xvjpf stage4.tar.bz2 --xattrs-include='*.*' --acls --numeric-owner
+#
+# XXX Note !!! with --xattrs-include support this shouldn't be an issue actually
+# tar doesn't preserve files capabilities and consequently may break your screenlocker,
+# in particular it breaks /sbin/unix_chkpwd and as a result kcheckpass, solution:
+# After untaring set required capabilities back with:
+# bash $ setcap /sbin/unix_chkpwd cap_dac_override+ep
+# or try chmod u+s /sbin/unix_chkpwd
+
+# exclude file
+# use */dir/* to preserve tree structure, so that dir itself isn't excluded
+# /home/den4ix/Downloads/*
+# /home/den4ix/Education
+# /home/den4ix/VirtualBox\ VMs
+# /home/den4ix/Projects/*
+# /lost+found
+# /dev/*
+# /mnt/*
+# /proc/*
+# /sys/*
+# /tmp/*
+# /usr/portage/*
+# /usr/src/*
+# /mnt/backups/stage4.tar.bz2
